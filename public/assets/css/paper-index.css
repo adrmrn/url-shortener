@@ -1,0 +1,120 @@
+body {
+  margin: 0;
+  background: #000; 
+}
+
+video { 
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  transform: translateX(-50%) translateY(-50%);
+  background: url('../img/poster.png') no-repeat;
+  background-size: cover;
+  transition: 1s opacity;
+}
+
+.btn-default.btn,
+.btn-default.btn:hover,
+.btn-default.btn:focus {
+  border-color: white;
+  color: white;
+}
+.btn-default.btn:hover,
+.btn-default.btn:focus {
+  background-color: white;
+  color: #66615B;
+}
+
+@media screen and (max-width: 500px) { 
+  div {
+    width:70%;
+  } 
+}
+
+@media screen and (max-device-width: 800px) {
+  html { 
+    background: url('../img/poster.png') #000 no-repeat center center fixed; 
+  }
+
+  #bgvid { 
+    display: none; 
+  }
+}
+
+
+/* TYPED */
+
+#center-block {
+  display: table;
+  width: 100%;
+}
+#center-content {
+  display: table-cell;
+  vertical-align: middle;
+}
+#center-text {
+  display: inline
+}
+#center-text p {
+  color: white;
+  font-size: 5rem;
+  font-family: 'Lato', sans-serif !important;
+  font-weight: 300;
+  margin-bottom: 50px;
+}
+#center-text p span {
+  font-weight: 700;
+  font-family: 'Lato', sans-serif !important;
+}
+.typed-cursor{
+    opacity: 1;
+    -webkit-animation: blink 0.7s infinite;
+    -moz-animation: blink 0.7s infinite;
+    animation: blink 0.7s infinite;
+}
+@keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+@-webkit-keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+@-moz-keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+
+
+/* MODAL */
+
+#homepage #center-block button:first-of-type {
+  margin-right: 10px;
+}
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px; /* Adjusts for spacing */
+}
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+.index-login-form input {
+  margin-bottom: 10px;
+}
