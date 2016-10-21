@@ -43,31 +43,11 @@
             <div id="center-text">
                 <p>Make your link <span id="typed-element"></span>.</p>
                 <button type="button" data-toggle="modal" data-target="#register-modal" class="btn btn-danger btn-fill btn-wd"><i class="ti-flag-alt-2"></i> Register</button>
-                <button type="button" data-toggle="modal" data-target="#login-modal" class="btn btn-default btn btn-wd"><i class="ti-user"></i> Sign In</button>
+                <a type="button" href="{{ url('/login') }}" class="btn btn-default btn btn-wd"><i class="ti-user"></i> Sign In</a>
             </div>
         </div>
     </div>
 </section>
-
-<!-- Modal -->
-<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="login-modal-label">
-    <div id="login-modal-dialog" class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="login-modal-label">Sign In</h4>
-            </div>
-            <div class="modal-body">
-                <form class="index-login-form text-right">
-                    <input id="shorter-link" type="text" class="form-control border-input" placeholder="Email">
-                    <input id="shorter-link" type="password" class="form-control border-input" placeholder="Password">
-
-                    <button type="submit" class="btn btn-danger btn-fill btn-wd"><i class="ti-unlock"></i> Log in</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 </body>
 
@@ -75,6 +55,7 @@
     <script src="{{ URL::asset('assets/js/jquery-1.10.2.js') }}" type="text/javascript"></script>
 	<script src="{{ URL::asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('assets/js/typed.js') }}" type="text/javascript"></script>
+    <script src="{{ URL::asset('assets/js/bootstrap-checkbox-radio.js') }}"></script>
 
     <script>
         $(function(){

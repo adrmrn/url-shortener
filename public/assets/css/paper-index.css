@@ -118,3 +118,35 @@ video {
 .index-login-form input {
   margin-bottom: 10px;
 }
+.form-horizontal .checkbox, .form-horizontal .checkbox-inline, .form-horizontal .radio, .form-horizontal .radio-inline {
+  padding-top: 2px;
+}
+
+
+/* BLUR */
+
+.blur-background {
+  -webkit-filter: blur(5px);
+  filter: blur(5px);
+}
+
+
+/* Login Page */
+
+.back-to-homepage {
+  padding-bottom: 8px;
+}
+
+.back-to-homepage a {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.back-to-homepage a:hover {
+  color: #ddd;
+  -webkit-transition: 250ms;
+}
+
+.back-to-homepage a i {
+  padding-right: 5px;
+}

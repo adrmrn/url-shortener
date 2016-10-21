@@ -156,6 +156,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Additional Packages...
+         */
+        Zizaco\Entrust\EntrustServiceProvider::class, // Role-based Permissions
+
     ],
 
     /*
@@ -201,6 +206,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Entrust' => Zizaco\Entrust\EntrustFacade::class, // Role-based Permissions
 
     ],
 
