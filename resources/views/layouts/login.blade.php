@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<link rel="apple-touch-icon" sizes="76x76" href="{{ URL::asset('assets/img/url-shortener-icon-apple.png') }}">
-	<link rel="icon" type="image/png" sizes="62x62" href="{{ URL::asset('assets/img/url-shortener-icon.png') }}">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ URL::asset('assets/img/url-shortener-icon-apple.png') }}">
+    <link rel="icon" type="image/png" sizes="62x62" href="{{ URL::asset('assets/img/url-shortener-icon.png') }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>URL Shortener - Make your link short.</title>
+    <title>@yield('title') - URL Shortener</title>
 
-	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
 
@@ -33,17 +33,22 @@
 <body>
 
 <section id="homepage">
-    <video poster="{{ URL::asset('assets/img/poster.png') }}" id="bgvid" playsinline autoplay muted loop>
+    <video poster="{{ URL::asset('assets/img/poster.png') }}" id="bgvid" playsinline autoplay muted loop class="blur-background">
         <source src="{{ URL::asset('assets/video/Typer.mp4') }}" type="video/mp4">
         <source src="{{ URL::asset('assets/video/Typer.webm') }}" type="video/webm">
     </video>
 
     <div id="center-block" class="text-center">
         <div id="center-content">
-            <div id="center-text">
-                <p>Make your link <span id="typed-element"></span>.</p>
-                <a href="{{ url('/register') }}" class="btn btn-danger btn-fill btn-wd"><i class="ti-flag-alt-2"></i> Register</a>
-                <a href="{{ url('/login') }}" class="btn btn-default btn btn-wd"><i class="ti-user"></i> Sign In</a>
+            <div style="display: inline;">
+                <div id="login-modal-dialog" class="modal-dialog modal-sm" role="document">
+                    <div class="back-to-homepage">
+                        <a href="{{ url('/') }}"><i class="ti-arrow-left"></i> Back to Homepage</a>
+                    </div>
+                    <div class="modal-content">
+                        @yield('content')
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -53,22 +58,10 @@
 
     <!--   Core JS Files   -->
     <script src="{{ URL::asset('assets/js/jquery-1.10.2.js') }}" type="text/javascript"></script>
-	<script src="{{ URL::asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
-    <script src="{{ URL::asset('assets/js/typed.js') }}" type="text/javascript"></script>
+    <script src="{{ URL::asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('assets/js/bootstrap-checkbox-radio.js') }}"></script>
 
-    <script>
-        $(function(){
-          $("#typed-element").typed({
-            strings: ["short", "sexy", "cool", "nice", "rude", "super"],
-            typeSpeed: 100,
-            loop: true,
-            backSpeed: 50
-          });
-        });
-    </script>
-
     <!-- Paper Homepage javascript -->
-	<script src="{{ URL::asset('assets/js/paper-index.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/paper-index.js') }}"></script>
 
 </html>
