@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['only' => ['dashboard']]);
     }
 
     /**
@@ -24,6 +24,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('homepage');
+    }
+
+    public function dashboard()
+    {
+        return view('dashboard');
     }
 }

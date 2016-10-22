@@ -42,8 +42,13 @@
         <div id="center-content">
             <div id="center-text">
                 <p>Make your link <span id="typed-element"></span>.</p>
-                <a href="{{ url('/register') }}" class="btn btn-danger btn-fill btn-wd"><i class="ti-flag-alt-2"></i> Register</a>
-                <a href="{{ url('/login') }}" class="btn btn-default btn btn-wd"><i class="ti-user"></i> Sign In</a>
+                @if (Auth::guest())
+                    <a href="{{ url('/register') }}" class="btn btn-danger btn-fill btn-wd" style="margin-right: 10px;"><i class="ti-flag-alt-2"></i> Register</a>
+                    <a href="{{ url('/login') }}" class="btn btn-default btn btn-wd"><i class="ti-user"></i> Sign In</a>
+                @else
+                    <a href="{{ url('/dashboard') }}" class="btn btn-danger btn-fill btn-wd" style="margin-right: 10px;"><i class="ti-dashboard"></i> Go to Dashboard</a>
+                    <a href="{{ url('/logout') }}" class="btn btn-default btn btn-wd"><i class="ti-export"></i> Logout</a>
+                @endif
             </div>
         </div>
     </div>
