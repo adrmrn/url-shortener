@@ -13,25 +13,16 @@
 
 Route::auth();
 
+// HomeController
 Route::get('/', 'HomeController@index');
-Route::get('/dashboard', 'HomeController@dashboard');
 
+// UsersController
+Route::get('/dashboard', 'UsersController@dashboard');
+Route::get('/profile', 'UsersController@profile');
 
-Route::get('/links', function() {
-	return view('links.index');
-});
-Route::get('/links/create', function() {
-	return view('links.create');
-});
-Route::get('/links/remove', function() {
-	return view('links.remove');
-});
-Route::get('/links/edit', function() {
-	return view('links.edit');
-});
-Route::get('/links/preview', function() {
-	return view('links.preview');
-});
-Route::get('/profile', function() {
-	return view('users.profile');
-});
+// LinksController
+Route::get('/links', 'LinksController@index');
+Route::get('/links/create', 'LinksController@create');
+Route::get('/links/remove', 'LinksController@remove');
+Route::get('/links/edit', 'LinksController@edit');
+Route::get('/links/preview', 'LinksController@preview');

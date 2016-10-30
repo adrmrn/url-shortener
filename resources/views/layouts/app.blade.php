@@ -40,7 +40,7 @@
                 </div>
 
                 <h4 class="title">
-                    John Doe<br />
+                    {{ Auth::user()->name }}<br />
                     <small>Admin</small>
                 </h4>
             </div>
@@ -92,12 +92,6 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <a href="{{ URL::to('/links/create') }}" class="btn btn-danger btn-fill btn-wd"><i class="ti-plus"></i> Create Link</a>
-                        </li>
-                        <li>
-                            <a href="{{ URL::to('/profile') }}">
-								<i class="ti-settings"></i>
-								<p>Settings</p>
-                            </a>
                         </li>
                         <li>
                             <a href="{{ URL::to('/logout') }}">
