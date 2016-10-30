@@ -41,7 +41,7 @@
 
                 <h4 class="title">
                     {{ Auth::user()->name }}<br />
-                    <small>Admin</small>
+                    <small>{{ Auth::user()->roles[0]->display_name }}</small>
                 </h4>
             </div>
 
@@ -72,6 +72,17 @@
                         <p>Edit Profile</p>
                     </a>
                 </li>
+
+                @if (Auth::user()->hasRole('admin'))
+                    <hr>
+                    <p class="text-center">Admin's tools</p>
+                    <li>
+                        <a href="{{ URL::to('/users') }}">
+                            <i class="ti-comments-smiley"></i>
+                            <p>Users List</p>
+                        </a>
+                    </li>
+                @endif
             </ul>
     	</div>
     </div>

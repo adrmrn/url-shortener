@@ -33,4 +33,9 @@ class UsersController extends Controller
     {
         return view('users.profile');
     }
+
+    public function listing()
+    {
+        return 'success';
+    }
 }

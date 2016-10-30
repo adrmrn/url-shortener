@@ -19,6 +19,7 @@ Route::get('/', 'HomeController@index');
 // UsersController
 Route::get('/dashboard', 'UsersController@dashboard');
 Route::get('/profile', 'UsersController@profile');
+Route::get('/users', 'UsersController@listing')->middleware('permission:users-list-view'); // Check if user have permission to view users' list
 
 // LinksController
 Route::get('/links', 'LinksController@index');
