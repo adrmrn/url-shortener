@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-sm-9 col-sm-6 col-md-4 col-lg-4">
                         <div class="form-group">
-                            <input id="shorter-link" type="text" class="form-control border-input readonly-input" value="short.es/65xDGd3" readonly>
+                            <input id="shorter-link" type="text" class="form-control border-input readonly-input" value="{{ Request::getHttpHost() }}/{{ $link->short_url }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -34,21 +34,23 @@
                     </div>
                     <div class="col-sm-9">
                         <div class="form-group">
-                            <input id="original-url" type="text" class="form-control border-input readonly-input" value="http://allegro.pl/strefaokazji/telewizor-led-40-samsung-ue40j5100-full-hd-200-hz-66253.html?ref=mainpage-bargains3" readonly>
+                            <input id="original-url" type="text" class="form-control border-input readonly-input" value="{{ Shortener::decodeUrl($link->url) }}" readonly>
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-3">
-                        <label class="control-label">Description</label>
-                    </div>
-                    <div class="col-sm-9">
-                        <div class="form-group">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nisl erat, eleifend ut ornare eget, commodo quis neque.</p>
+                @if ($link->description)
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="control-label">Description</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="form-group">
+                                <p>{{ $link->description }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
 
                 <div class="row">
                     <div class="col-md-3">

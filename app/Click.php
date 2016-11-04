@@ -11,6 +11,6 @@ class Click extends Model
      */
     public function link()
     {
-        return $this->belongsTo('App\Link');
+        return $this->belongsTo(Link::class);
     }
 }

@@ -6,12 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Link extends Model
 {
+    protected $fillable = [
+        'url', 'short_url', 'description'
+    ];
+
 	/**
      * Get the user that owns the link.
      */
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -19,6 +23,6 @@ class Link extends Model
      */
     public function clicks()
     {
-        return $this->hasMany('App\Click');
+        return $this->hasMany(Click::class);
     }
 }

@@ -160,7 +160,7 @@ return [
          * Additional Packages...
          */
         Zizaco\Entrust\EntrustServiceProvider::class, // Role-based Permissions
-
+        Collective\Html\HtmlServiceProvider::class, // Laravel Collective - Forms & HTML
     ],
 
     /*
@@ -206,8 +206,14 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Entrust' => Zizaco\Entrust\EntrustFacade::class, // Role-based Permissions
 
+        /*
+         * Additional Aliases...
+         */
+        'Entrust' => Zizaco\Entrust\EntrustFacade::class, // Role-based Permissions
+        'Form' => Collective\Html\FormFacade::class, // Laravel Collective - Forms & HTML
+        'Html' => Collective\Html\HtmlFacade::class, // Laravel Collective - Forms & HTML
+        'Shortener' => App\Libraries\Shortener::class // My own class - shortener
     ],
 
 ];
