@@ -148,20 +148,8 @@
 
 <script type="text/javascript">
     demo.initChartist();
-    
-    @if (count($errors) > 0)
-        $.notify({
-            icon: 'ti-alert',
-            message: "<strong>Error!</strong><br />"
-                @foreach ($errors->all() as $error) 
-                    + "<li>{{ $error }}</li>"
-                @endforeach
 
-        },{
-            type: 'danger',
-            timer: 4000
-        });
-    @endif
+    @include('layouts/notify')
 </script>
 
 @stop

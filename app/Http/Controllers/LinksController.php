@@ -10,6 +10,7 @@ use Auth;
 use App\Libraries\Shortener; // use Shortener class
 use App\Link;
 use DB;
+use Session;
 
 class LinksController extends Controller
 {
@@ -54,7 +55,10 @@ class LinksController extends Controller
                         ->withInput()
                         ->withErrors(['Something\'s gone wrong, please try again!']);
         }
-        
+
+        // Put flash message to session
+        flash(1, 'Link added!');
+
         return redirect()->action('LinksController@preview', ['short_url' => $link->short_url]);
     }
 
@@ -72,7 +76,9 @@ class LinksController extends Controller
     {
         // Check if link exist
         if (Link::where('short_url', $short_url)->count() === 0) {
-            return redirect('dashboard')->withErrors(['Links doesn\'t exist!']);
+            flash(0, 'Link doesn\'t exist!');
+
+            return redirect('dashboard');
         }
 
         $link = Link::where('short_url', $short_url)->first();
@@ -81,7 +87,16 @@ class LinksController extends Controller
         // Check if user is link's owner
         if (!$user->links($link)) {
             // User isn't owner, no access, redirect to dashboard with error
-            return redirect('dashboard')->withErrors(['No access to preview link!']);
+            flash(0, 'No access to preview link!');
+
+            return redirect('dashboard');
+        }
+
+        // Check if link is active
+        if ($link->status === 0) {
+            flash(0, 'Link doesn\'t exist!');
+
+            return redirect('dashboard');
         }
 
         // All is fine, show view with link

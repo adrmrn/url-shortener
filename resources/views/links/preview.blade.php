@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-sm-9 col-sm-6 col-md-4 col-lg-4">
                         <div class="form-group">
-                            <input id="shorter-link" type="text" class="form-control border-input readonly-input" value="{{ Request::getHttpHost() }}/{{ $link->short_url }}" readonly>
+                            <input id="shorter-link" type="text" class="form-control border-input readonly-input" value="{{ Request::getHttpHost() }}/s/{{ $link->short_url }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -179,14 +179,7 @@
 <script type="text/javascript">
     demo.initChartist();
 
-    $.notify({
-        icon: 'ti-gift',
-        message: "<strong>Success!</strong><br />Link added!"
-
-    },{
-        type: 'success',
-        timer: 2000
-    });
+    @include('layouts/notify');
 
     $("#shorter-link, #original-url").on("click", function () {
         $(this).select();
