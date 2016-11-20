@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Requests\CreateLinkRequest;
+use App\Http\Requests\EditLinkRequest;
 use Auth;
 use App\Libraries\Shortener; // use Shortener class
 use App\Link;
@@ -67,21 +68,47 @@ class LinksController extends Controller
         return view('links.remove');
     }
 
-    public function edit()
-    {
-        return view('links.edit');
-    }
-
-    public function preview($short_url)
+    public function edit($short_url)
     {
         // Check if link exist
-        if (Link::where('short_url', $short_url)->count() === 0) {
+        if (Link::where([ ['short_url', '=', $short_url], ['status', '=', '1'] ])->count() === 0) {
             flash(0, 'Link doesn\'t exist!');
 
             return redirect('dashboard');
         }
 
-        $link = Link::where('short_url', $short_url)->first();
+        $link = Link::where([ ['short_url', '=', $short_url], ['status', '=', '1'] ])->first();
+        $user = Auth::user();
+
+        // Check if user is link's owner
+        if (!$user->links($link)) {
+            // User isn't owner, no access, redirect to dashboard with error
+            flash(0, 'No access to preview link!');
+
+            return redirect('dashboard');
+        }
+
+        // Check if link is active
+        if ($link->status === 0) {
+            flash(0, 'Link doesn\'t exist!');
+
+            return redirect('dashboard');
+        }
+
+        // All is fine, show edit link
+        return view('links.edit')->with('link', $link);
+    }
+
+    public function preview($short_url)
+    {
+        // Check if link exist
+        if (Link::where([ ['short_url', '=', $short_url], ['status', '=', '1'] ])->count() === 0) {
+            flash(0, 'Link doesn\'t exist!');
+
+            return redirect('dashboard');
+        }
+
+        $link = Link::where([ ['short_url', '=', $short_url], ['status', '=', '1'] ])->first();
         $user = Auth::user();
 
         // Check if user is link's owner
@@ -101,6 +128,44 @@ class LinksController extends Controller
 
         // All is fine, show view with link
         return view('links.preview')->with('link', $link);
+    }
+
+    public function update(EditLinkRequest $request, $short_url) {
+        //dd($request->all());
+        //dd($short_url);
+
+        // Check if link exist
+        if (Link::where([ ['short_url', '=', $short_url], ['status', '=', '1'] ])->count() === 0) {
+            flash(0, 'Link doesn\'t exist!');
+
+            return redirect('dashboard');
+        }
+
+        $link = Link::where([ ['short_url', '=', $short_url], ['status', '=', '1'] ])->first();
+        $user = Auth::user();
+
+        // Check if user is link's owner
+        if (!$user->links($link)) {
+            // User isn't owner, no access, redirect to dashboard with error
+            flash(0, 'No access to edit link!');
+
+            return redirect('dashboard');
+        }
+
+        // Check if link is active
+        if ($link->status === 0) {
+            flash(0, 'Link doesn\'t exist!');
+
+            return redirect('dashboard');
+        }
+
+        $shortener = new Shortener;
+        $shortener->editShortLink($link, $request->only(['url', 'description']));
+
+        // All is fine, show view with link
+        return redirect()->action(
+            'LinksController@preview', ['short_url' => $short_url]
+        );
     }
 
     public function test() {

@@ -15,6 +15,13 @@ class Shortener
 		]);
 	}
 
+	public function editShortLink(Link $link, array $request) {
+		return $link->update([
+			'url' 			=> Shortener::encodeUrl($request['url']),
+			'description' 	=> $request['description']
+		]);
+	}
+
 	// Set Link's name (short url)
 	private function setName($requestName) {
 		// Check if name is empty, if not then generate random string
@@ -52,6 +59,6 @@ class Shortener
 
 	// Validation
 	public function isNameAvailable($attribute, $value, $parameters = null, $validator = null) {
-		return DB::table('links')->where('short_url', $value)->count() === 0;
+		return DB::table('links')->where([ ['short_url', '=', $value], ['status', '=', '1'] ])->count() === 0;
 	}
 }

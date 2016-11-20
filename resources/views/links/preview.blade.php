@@ -74,7 +74,7 @@
 
                 <div class="row">
                     <div class="col-md-9 col-md-offset-3" style="padding-left: 5px; padding-top: 15px;">
-                        <button type="submit" class="btn btn-danger btn-fill btn-wd"><i class="ti-pencil"></i> Edit Link</button>
+                        <a href="{{ URL::to('/links/edit/' . $link->short_url) }}" class="btn btn-danger btn-fill btn-wd"><i class="ti-pencil"></i> Edit Link</a>
                         <button type="submit" class="btn btn-default btn-fill btn-wd"><i class="ti-close"></i> Remove Link</button>
                     </div>
                 </div>

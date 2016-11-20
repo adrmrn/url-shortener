@@ -27,4 +27,5 @@ Route::post('/links/create', 'LinksController@store'); // Store new short link
 Route::get('/links/create', 'LinksController@create'); // Page with form for add new short link
 Route::get('/links/remove', 'LinksController@remove');
 Route::get('/links/preview/{short_url}', 'LinksController@preview');
-Route::get('/links/edit', 'LinksController@edit');
+Route::get('/links/edit/{short_url}', 'LinksController@edit');
+Route::patch('/links/edit/{short_url}', 'LinksController@update');
