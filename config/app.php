@@ -161,6 +161,7 @@ return [
          */
         Zizaco\Entrust\EntrustServiceProvider::class, // Role-based Permissions
         Collective\Html\HtmlServiceProvider::class, // Laravel Collective - Forms & HTML
+        Jenssegers\Agent\AgentServiceProvider::class, // Agent - Mobile Detect for Laravel
     ],
 
     /*
@@ -213,6 +214,7 @@ return [
         'Entrust' => Zizaco\Entrust\EntrustFacade::class, // Role-based Permissions
         'Form' => Collective\Html\FormFacade::class, // Laravel Collective - Forms & HTML
         'Html' => Collective\Html\HtmlFacade::class, // Laravel Collective - Forms & HTML
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
         'Shortener' => App\Libraries\Shortener::class // My own class - shortener
     ],
 

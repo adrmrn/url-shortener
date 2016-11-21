@@ -11,7 +11,7 @@ class Link extends Model
     use FormAccessible; // Laravel Collective
 
     protected $fillable = [
-        'url', 'short_url', 'description'
+        'url', 'short_url', 'description', 'status'
     ];
 
 	/**

@@ -26,7 +26,6 @@ class EditLinkRequest extends Request
     {
         return [
             'url' => 'required|url',
-            //'name' => 'link.name_available|min:3|max:10',
             'description' => 'max:255'
         ];
     }

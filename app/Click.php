@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Click extends Model
 {
+	protected $fillable = [
+        'ip', 'device'
+    ];
+
     /**
      * Get the link that owns the clicks.
      */

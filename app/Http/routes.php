@@ -23,9 +23,11 @@ Route::get('/users', 'UsersController@listing')->middleware('permission:users-li
 
 // LinksController
 Route::get('/links', 'LinksController@index');
+Route::get('/s/{short_url}', 'LinksController@redirect');
 Route::post('/links/create', 'LinksController@store'); // Store new short link
 Route::get('/links/create', 'LinksController@create'); // Page with form for add new short link
-Route::get('/links/remove', 'LinksController@remove');
+Route::get('/links/remove/{short_url}', 'LinksController@remove'); // Page with form for remove link
+Route::patch('/links/remove/{short_url}', 'LinksController@deactivate'); // Remove link
 Route::get('/links/preview/{short_url}', 'LinksController@preview');
 Route::get('/links/edit/{short_url}', 'LinksController@edit');
 Route::patch('/links/edit/{short_url}', 'LinksController@update');

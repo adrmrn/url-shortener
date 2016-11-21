@@ -4,6 +4,8 @@ namespace App\Libraries;
 
 use DB;
 use App\Link;
+use App\Click;
+use Jenssegers\Agent\Agent;
 
 class Shortener
 {
@@ -19,6 +21,21 @@ class Shortener
 		return $link->update([
 			'url' 			=> Shortener::encodeUrl($request['url']),
 			'description' 	=> $request['description']
+		]);
+	}
+
+	public function deactivateShortLink(Link $link) {
+		return $link->update([
+			'status' => 0
+		]);
+	}
+
+	public function createClick($request) {
+		$agent = new Agent;
+
+		return new Click([
+			'ip' 		=> $request->ip(), // Save client IP
+			'device' 	=> $agent->isMobile() ? ($agent->isTablet() ? 'tablet' : 'phone') : 'computer' // Save client device
 		]);
 	}
 

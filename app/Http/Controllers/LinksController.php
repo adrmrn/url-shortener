@@ -10,8 +10,10 @@ use App\Http\Requests\EditLinkRequest;
 use Auth;
 use App\Libraries\Shortener; // use Shortener class
 use App\Link;
+use App\Click;
 use DB;
 use Session;
+
 
 class LinksController extends Controller
 {
@@ -32,12 +34,39 @@ class LinksController extends Controller
      */
     public function index()
     {
-        return view('links.index');
+        $user = Auth::user();
+        // $links = Link::where([ ['user_id', $user->id], ['status', '1'] ])->get();
+        $links = Link::where([ ['user_id', $user->id], ['status', '1'] ])->paginate(10);
+
+        return view('links.index')->with('links', $links);
     }
 
     public function create()
     {
         return view('links.create');
+    }
+
+    public function redirect($short_url, Request $request) 
+    {
+        // Check if link exist
+        if (Link::where([ ['short_url', '=', $short_url], ['status', '=', '1'] ])->count() === 0) {
+            flash(0, 'Link doesn\'t exist!');
+
+            return redirect('dashboard');
+        }
+
+        $link = Link::where([ ['short_url', '=', $short_url], ['status', '=', '1'] ])->first();
+
+        $shortener = new Shortener;
+
+        // Create Click obj
+        $click = $shortener->createClick($request);
+
+        // Save Click to DB
+        $link->clicks()->save($click);
+
+        // All is fine, redirect to url
+        return redirect(Shortener::decodeUrl($link->url));
     }
 
     public function store(CreateLinkRequest $request)
@@ -63,9 +92,56 @@ class LinksController extends Controller
         return redirect()->action('LinksController@preview', ['short_url' => $link->short_url]);
     }
 
-    public function remove()
+    public function remove($short_url)
     {
-        return view('links.remove');
+        // Check if link exist
+        if (Link::where([ ['short_url', '=', $short_url], ['status', '=', '1'] ])->count() === 0) {
+            flash(0, 'Link doesn\'t exist!');
+
+            return redirect('dashboard');
+        }
+
+        $link = Link::where([ ['short_url', '=', $short_url], ['status', '=', '1'] ])->first();
+        $user = Auth::user();
+
+        // Check if user is link's owner
+        if (!$user->links($link)) {
+            // User isn't owner, no access, redirect to dashboard with error
+            flash(0, 'No access to remove link!');
+
+            return redirect('dashboard');
+        }
+
+        return view('links.remove')->with('link', $link);
+    }
+
+    public function deactivate($short_url)
+    {
+        // Check if link exist
+        if (Link::where([ ['short_url', '=', $short_url], ['status', '=', '1'] ])->count() === 0) {
+            flash(0, 'Link doesn\'t exist!');
+
+            return redirect('dashboard');
+        }
+
+        $link = Link::where([ ['short_url', '=', $short_url], ['status', '=', '1'] ])->first();
+        $user = Auth::user();
+
+        // Check if user is link's owner
+        if (!$user->links($link)) {
+            // User isn't owner, no access, redirect to dashboard with error
+            flash(0, 'No access to remove link!');
+
+            return redirect('dashboard');
+        }
+
+        $shortener = new Shortener;
+        $shortener->deactivateShortLink($link);
+
+        flash(1, 'Link has been removed!');
+
+        // All is fine, deactivate link
+        return redirect('dashboard');
     }
 
     public function edit($short_url)
@@ -84,13 +160,6 @@ class LinksController extends Controller
         if (!$user->links($link)) {
             // User isn't owner, no access, redirect to dashboard with error
             flash(0, 'No access to preview link!');
-
-            return redirect('dashboard');
-        }
-
-        // Check if link is active
-        if ($link->status === 0) {
-            flash(0, 'Link doesn\'t exist!');
 
             return redirect('dashboard');
         }
@@ -115,13 +184,6 @@ class LinksController extends Controller
         if (!$user->links($link)) {
             // User isn't owner, no access, redirect to dashboard with error
             flash(0, 'No access to preview link!');
-
-            return redirect('dashboard');
-        }
-
-        // Check if link is active
-        if ($link->status === 0) {
-            flash(0, 'Link doesn\'t exist!');
 
             return redirect('dashboard');
         }
@@ -152,15 +214,10 @@ class LinksController extends Controller
             return redirect('dashboard');
         }
 
-        // Check if link is active
-        if ($link->status === 0) {
-            flash(0, 'Link doesn\'t exist!');
-
-            return redirect('dashboard');
-        }
-
         $shortener = new Shortener;
         $shortener->editShortLink($link, $request->only(['url', 'description']));
+
+        flash(1, 'Link has been updated!');
 
         // All is fine, show view with link
         return redirect()->action(

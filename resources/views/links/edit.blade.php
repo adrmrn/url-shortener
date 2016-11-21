@@ -42,7 +42,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-danger btn-fill btn-wd"><i class="ti-plus"></i> Edit Link</button>
-                        <a href="{{ URL::to('/dashboard') }}" class="btn btn-default btn-fill btn-wd"><i class="ti-close"></i> Cancel</a>
+                        <a href="{{ URL::to('/links/preview/' . $link->short_url) }}" class="btn btn-default btn-fill btn-wd"><i class="ti-close"></i> Cancel</a>
                     </div>
                 </div>
             {!! Form::close() !!}
