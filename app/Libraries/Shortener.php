@@ -5,6 +5,7 @@ namespace App\Libraries;
 use DB;
 use App\Link;
 use App\Click;
+use App\User;
 use Jenssegers\Agent\Agent;
 
 class Shortener
@@ -77,5 +78,24 @@ class Shortener
 	// Validation
 	public function isNameAvailable($attribute, $value, $parameters = null, $validator = null) {
 		return DB::table('links')->where([ ['short_url', '=', $value], ['status', '=', '1'] ])->count() === 0;
+	}
+
+	public function checkIfLinkExist($short_url) {
+		// Check if link exist
+        if (Link::where([ ['short_url', '=', $short_url], ['status', '=', '1'] ])->count() === 0) {
+            flash(0, 'Link doesn\'t exist!');
+
+            return redirect('dashboard');
+        }
+	}
+
+	public function checkAccessToLink(User $user, Link $link) {
+		// Check if user is link's owner
+        if (!$user->links($link)) {
+            // User isn't owner, no access, redirect to dashboard with error
+            flash(0, 'No access!');
+
+            return redirect('dashboard');
+        }
 	}
 }

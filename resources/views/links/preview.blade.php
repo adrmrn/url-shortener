@@ -100,7 +100,7 @@
                     <div class="col-xs-7">
                         <div class="numbers">
                             <p>Clicks</p>
-                            46
+                            {{ $link->clicks->count() }}
                         </div>
                     </div>
                 </div>
@@ -119,7 +119,7 @@
                     <div class="col-xs-7">
                         <div class="numbers">
                             <p>Unique Clicks</p>
-                            21
+                            {{ $link->clicks->unique('ip')->count() }}
                         </div>
                     </div>
                 </div>
@@ -138,7 +138,7 @@
                     <div class="col-xs-7">
                         <div class="numbers">
                             <p>Days Online</p>
-                            14
+                            {{ getDays($link->created_at) }}
                         </div>
                     </div>
                 </div>
@@ -177,9 +177,9 @@
 <script src="{{ URL::asset('assets/js/demo.js') }}"></script>
 
 <script type="text/javascript">
-    demo.initChartist();
-
-    @include('layouts/notify');
+    demo.initChartist({!! json_encode($link->clicks->toArray()) !!});
+    
+    @include('layouts/notify')
 
     $("#shorter-link, #original-url").on("click", function () {
         $(this).select();

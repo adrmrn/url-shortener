@@ -16,10 +16,26 @@ demo = {
         });
     },
 
-    initChartist: function(){
+    getLastWeek: function(date = new Date()) {
+        var lastWeek = [];
+
+        for (var i = 6; i >= 0; i--) {
+          var tmp = new Date();
+          tmp.setDate(date.getDate() - i);
+
+          lastWeek.push(tmp.getDate() + '-' + ("0" + (tmp.getMonth() + 1)).slice(-2) + '-' + tmp.getFullYear());
+        }
+
+        return lastWeek;
+    },
+
+    initChartist: function(clicks = null){
+        var lastWeek = this.getLastWeek(new Date());
+
+        console.log(clicks[0]);
 
         var dataSales = {
-          labels: ['9:00AM', '12:00AM', '3:00PM', '6:00PM', '9:00PM', '12:00PM', '3:00AM', '6:00AM'],
+          labels: lastWeek,
           series: [
              [287, 385, 490, 562, 594, 626, 698, 895, 952],
             [67, 152, 193, 240, 387, 435, 535, 642, 744],

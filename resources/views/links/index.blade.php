@@ -22,6 +22,7 @@
                     <th>Short URL</th>
                     <th>Description</th>
                     <th class="text-center">Clicks</th>
+                    <th class="text-center">Preview</th>
                     <th class="text-center">Edit</th>
                     <th class="text-center">Remove</th>
                 </thead>
@@ -32,6 +33,7 @@
                             <td>{{ Request::getHttpHost() }}/s/{{ $link->short_url }}</td>
                             <td>{{ $link->description }}</td>
                             <td class="text-center">{{ $link->clicks->count() }}</td>
+                            <td class="text-center"><a href="{{ URL::to('/links/preview/' . $link->short_url) }}" class="manage-icons"><i class="ti-eye"></i></a></td>
                             <td class="text-center"><a href="{{ URL::to('/links/edit/' . $link->short_url) }}" class="manage-icons"><i class="ti-pencil"></i></a></td>
                             <td class="text-center"><a href="{{ URL::to('/links/remove/' . $link->short_url) }}" class="manage-icons"><i class="ti-trash"></i></a></td>
                         </tr>

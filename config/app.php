@@ -215,6 +215,7 @@ return [
         'Form' => Collective\Html\FormFacade::class, // Laravel Collective - Forms & HTML
         'Html' => Collective\Html\HtmlFacade::class, // Laravel Collective - Forms & HTML
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
+        'Carbon' => Carbon\Carbon::class, // Carbon - Time and Date
         'Shortener' => App\Libraries\Shortener::class // My own class - shortener
     ],
 
