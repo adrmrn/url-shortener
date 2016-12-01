@@ -10,3 +10,8 @@ function flash($type, $message) {
 function getDays(Carbon\Carbon $date) {
 	return $date->diffInDays();
 }
+
+// Function for generate short link with domain
+function getShortLink($short_url) {
+	return Request::getHttpHost() . '/s/' . $short_url;
+}

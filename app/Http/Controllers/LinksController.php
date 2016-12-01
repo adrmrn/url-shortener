@@ -167,8 +167,11 @@ class LinksController extends Controller
         // Check if user has access to Link 
         $shortener->checkAccessToLink($user, $link);
 
+        // Get link's stats and convert for chart data
+        $stats = $shortener->getLinkStats($link);
+
         // All is fine, show view with link
-        return view('links.preview')->with('link', $link);
+        return view('links.preview')->with('link', $link)->with('stats', $stats);
     }
 
     public function update(EditLinkRequest $request, $short_url) {

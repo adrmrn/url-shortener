@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-sm-9 col-sm-6 col-md-4 col-lg-4">
                         <div class="form-group">
-                            <input id="shorter-link" type="text" class="form-control border-input readonly-input" value="{{ Request::getHttpHost() }}/s/{{ $link->short_url }}" readonly>
+                            <input id="shorter-link" type="text" class="form-control border-input readonly-input" value="{{ getShortLink($link->short_url) }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -152,7 +152,7 @@
         <div class="card">
             <div class="header">
                 <h4 class="title">Chart</h4>
-                <p class="category">All time</p>
+                <p class="category">Last week</p>
             </div>
             <div class="content">
                 <div id="chartHours" class="ct-chart"></div>
@@ -177,8 +177,9 @@
 <script src="{{ URL::asset('assets/js/demo.js') }}"></script>
 
 <script type="text/javascript">
-    demo.initChartist({!! json_encode($link->clicks->toArray()) !!});
-    
+    var json = {!! $stats !!};
+    //console.log(json);
+    demo.initChartist(json);
     @include('layouts/notify')
 
     $("#shorter-link, #original-url").on("click", function () {

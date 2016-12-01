@@ -29,10 +29,11 @@ demo = {
         return lastWeek;
     },
 
-    initChartist: function(clicks = null){
+    initChartist: function(json = null){
         var lastWeek = this.getLastWeek(new Date());
 
-        console.log(clicks[0]);
+        // console.log(clicks[0]);
+        //console.log(lastWeek);
 
         var dataSales = {
           labels: lastWeek,
@@ -43,17 +44,25 @@ demo = {
           ]
         };
 
+        console.log(json);
+        console.log(dataSales);
+
+        dataSales = json;
+
         var optionsSales = {
           lineSmooth: false,
           low: 0,
-          high: 1000,
+          high: Math.max.apply(null, json.series[0]),
           showArea: true,
           height: "245px",
           axisX: {
             showGrid: false,
           },
+          axisY: {
+            onlyInteger: true,
+          },
           lineSmooth: Chartist.Interpolation.simple({
-            divisor: 3
+            divisor: 2
           }),
           showLine: true,
           showPoint: false,

@@ -7,6 +7,7 @@ use App\Link;
 use App\Click;
 use App\User;
 use Jenssegers\Agent\Agent;
+use Carbon;
 
 class Shortener
 {
@@ -38,6 +39,41 @@ class Shortener
 			'ip' 		=> $request->ip(), // Save client IP
 			'device' 	=> $agent->isMobile() ? ($agent->isTablet() ? 'tablet' : 'phone') : 'computer' // Save client device
 		]);
+	}
+
+	public function getLinkStats(Link $link) {
+		$stats = $link->clicks;
+
+		$lastWeek = [];
+		for ($i = 6; $i >= 0; $i--) {
+			$now = Carbon::now();
+			$lastWeek[$now->subDay($i)->format("d-m-Y")] = 0;
+        }
+
+		foreach ($stats as $click) {
+			if (isset($lastWeek[$click->created_at->format("d-m-Y")])) {
+				$lastWeek[$click->created_at->format("d-m-Y")]++;
+			}
+		}
+
+		$i = 0;
+		foreach ($lastWeek as $day => $value) {
+			if (count($lastWeek) - 1 == $i) {
+				$series[] = $value;
+			} else {
+				$labels[] = $day;
+				$series[] = $value;	
+			}
+
+			$i++;
+		}
+
+		$data = array(
+			"labels" => $labels,
+			"series" => [ $series ]
+		);
+
+		return json_encode($data);
 	}
 
 	// Set Link's name (short url)
