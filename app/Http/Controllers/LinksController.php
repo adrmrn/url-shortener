@@ -156,7 +156,9 @@ class LinksController extends Controller
         $shortener = new Shortener;
 
         // Checking if Link exist
-        $shortener->checkIfLinkExist($short_url);
+        if ($shortener->checkIfLinkExist($short_url) === false) {
+            return redirect('dashboard');
+        }
 
         // Get Link obj
         $link = Link::where([ ['short_url', '=', $short_url], ['status', '=', '1'] ])->first();

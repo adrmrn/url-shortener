@@ -44,11 +44,24 @@ class Shortener
 	public function getLinkStats(Link $link) {
 		$stats = $link->clicks;
 
-		$lastWeek = [];
-		for ($i = 6; $i >= 0; $i--) {
-			$now = Carbon::now();
-			$lastWeek[$now->subDay($i)->format("d-m-Y")] = 0;
-        }
+		return $this->generateStatsData($stats);
+	}
+
+	public function getAllLinksStats(User $user) {
+		$stats = [];
+
+		foreach ($user->links as $link) {
+			foreach ($link->clicks as $click) {
+				$stats[] = $click;
+			}
+		}
+
+		return $this->generateStatsData($stats);
+	}
+
+	private function generateStatsData($stats) {
+		// Get day from last week
+		$lastWeek = $this->getLastWeek();
 
 		foreach ($stats as $click) {
 			if (isset($lastWeek[$click->created_at->format("d-m-Y")])) {
@@ -74,6 +87,17 @@ class Shortener
 		);
 
 		return json_encode($data);
+	}
+
+	// Get day from last week
+	private function getLastWeek() {
+		$lastWeek = [];
+		for ($i = 6; $i >= 0; $i--) {
+			$now = Carbon::now();
+			$lastWeek[$now->subDay($i)->format("d-m-Y")] = 0;
+        }
+
+        return $lastWeek;
 	}
 
 	// Set Link's name (short url)
@@ -121,8 +145,10 @@ class Shortener
         if (Link::where([ ['short_url', '=', $short_url], ['status', '=', '1'] ])->count() === 0) {
             flash(0, 'Link doesn\'t exist!');
 
-            return redirect('dashboard');
+            return false;
         }
+
+        return true;
 	}
 
 	public function checkAccessToLink(User $user, Link $link) {

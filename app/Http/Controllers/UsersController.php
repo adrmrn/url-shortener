@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Auth;
+use App\Libraries\Shortener; // use Shortener class
 
 class UsersController extends Controller
 {
@@ -26,7 +27,18 @@ class UsersController extends Controller
      */
     public function dashboard()
     {
-        return view('users.dashboard');
+        $shortener = new Shortener;
+
+        // Get User obj
+        $user = Auth::user();
+
+        // Get user's links
+        $links = $user->links;
+
+        // Get all links stats and convert for chart data
+        $stats = $shortener->getAllLinksStats($user);
+
+        return view('users.dashboard')->with('stats', $stats)->with('links', $links);
     }
 
     public function profile()

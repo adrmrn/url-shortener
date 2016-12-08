@@ -30,7 +30,7 @@
                     @foreach ($links as $link)
                         <tr>
                             <td>{{ Shortener::decodeUrl($link->url) }}</td>
-                            <td>{{ Request::getHttpHost() }}/s/{{ $link->short_url }}</td>
+                            <td>{{ getShortLink($link->short_url) }}</td>
                             <td>{{ $link->description }}</td>
                             <td class="text-center">{{ $link->clicks->count() }}</td>
                             <td class="text-center"><a href="{{ URL::to('/links/preview/' . $link->short_url) }}" class="manage-icons"><i class="ti-eye"></i></a></td>

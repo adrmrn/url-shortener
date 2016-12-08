@@ -75,7 +75,7 @@
                 <div class="row">
                     <div class="col-md-9 col-md-offset-3" style="padding-left: 5px; padding-top: 15px;">
                         <a href="{{ URL::to('/links/edit/' . $link->short_url) }}" class="btn btn-danger btn-fill btn-wd"><i class="ti-pencil"></i> Edit Link</a>
-                        <a href="#" class="btn btn-default btn-fill btn-wd"><i class="ti-close"></i> Remove Link</a>
+                        <a href="{{ URL::to('/links/remove/' . $link->short_url) }}" class="btn btn-default btn-fill btn-wd"><i class="ti-close"></i> Remove Link</a>
                     </div>
                 </div>
             </form>
@@ -151,16 +151,14 @@
     <div class="col-md-12">
         <div class="card">
             <div class="header">
-                <h4 class="title">Chart</h4>
+                <h4 class="title">Statistics</h4>
                 <p class="category">Last week</p>
             </div>
             <div class="content">
                 <div id="chartHours" class="ct-chart"></div>
                 <div class="footer">
                     <div class="chart-legend">
-                        <i class="fa fa-circle text-info"></i> Open
-                        <i class="fa fa-circle text-danger"></i> Click
-                        <i class="fa fa-circle text-warning"></i> Click Second Time
+                        <i class="fa fa-circle text-info"></i> Clicks
                     </div>
                 </div>
             </div>
@@ -178,7 +176,6 @@
 
 <script type="text/javascript">
     var json = {!! $stats !!};
-    //console.log(json);
     demo.initChartist(json);
     @include('layouts/notify')
 
