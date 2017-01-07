@@ -29,9 +29,9 @@
                 <tbody>
                     @foreach ($links as $link)
                         <tr>
-                            <td>{{ Shortener::decodeUrl($link->url) }}</td>
-                            <td>{{ getShortLink($link->short_url) }}</td>
-                            <td>{{ $link->description }}</td>
+                            <td><a href="{{ Shortener::decodeUrl($link->url) }}">{{ str_limit(Shortener::decodeUrl($link->url), 30) }}</a></td>
+                            <td><a href="{{ URL::to('/s/' . $link->short_url) }}">{{ getShortLink($link->short_url) }}</a></td>
+                            <td>{{ str_limit($link->description, 40) }}</td>
                             <td class="text-center">{{ $link->clicks->count() }}</td>
                             <td class="text-center"><a href="{{ URL::to('/links/preview/' . $link->short_url) }}" class="manage-icons"><i class="ti-eye"></i></a></td>
                             <td class="text-center"><a href="{{ URL::to('/links/edit/' . $link->short_url) }}" class="manage-icons"><i class="ti-pencil"></i></a></td>
@@ -47,5 +47,17 @@
         </div>
     </div>
 </div>
+
+@stop
+
+<!-- Define scripts on page -->
+@section('scripts')
+
+<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+<script src="{{ URL::asset('assets/js/demo.js') }}"></script>
+
+<script type="text/javascript">
+    @include('layouts/notify')
+</script>
 
 @stop

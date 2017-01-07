@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name', 'last_name', 'email', 'password', 'website',
     ];
 
     /**
@@ -33,5 +33,13 @@ class User extends Authenticatable
     public function links()
     {
         return $this->hasMany(Link::class);
+    }
+
+    /**
+     * Set the password to be hashed when saved
+     */
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = \Hash::make($password);
     }
 }

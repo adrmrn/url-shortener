@@ -157,7 +157,9 @@ class Shortener
             // User isn't owner, no access, redirect to dashboard with error
             flash(0, 'No access!');
 
-            return redirect('dashboard');
+            return false;
         }
+
+        return true;
 	}
 }

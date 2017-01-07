@@ -10,7 +10,7 @@ function flash($type, $message) {
 
 // Function for get days
 function getDays(Carbon\Carbon $date) {
-	return $date->diffInDays();
+	return $date->diffInDays() + 1;
 }
 
 // Function for generate short link with domain

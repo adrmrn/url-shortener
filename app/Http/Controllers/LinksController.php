@@ -50,7 +50,9 @@ class LinksController extends Controller
         $shortener = new Shortener;
 
         // Checking if Link exist
-        $shortener->checkIfLinkExist($short_url);
+        if (!$shortener->checkIfLinkExist($short_url)) {
+            return redirect('/');
+        }        
 
         // Get Link obj
         $link = Link::where([ ['short_url', '=', $short_url], ['status', '=', '1'] ])->first();
@@ -128,7 +130,7 @@ class LinksController extends Controller
         flash(1, 'Link has been removed!');
 
         // All is fine, deactivate link
-        return redirect('dashboard');
+        return redirect('links');
     }
 
     public function edit($short_url)
@@ -188,7 +190,7 @@ class LinksController extends Controller
         // Get User obj
         $user = Auth::user();
 
-        // Check if user has access to Link 
+        // Check if user has access to Link
         $shortener->checkAccessToLink($user, $link);
 
         // Update Link

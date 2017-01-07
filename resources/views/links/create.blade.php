@@ -42,7 +42,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-danger btn-fill btn-wd"><i class="ti-plus"></i> Create Link</button>
-                        <a href="{{ URL::to('/dashboard') }}" class="btn btn-default btn-fill btn-wd"><i class="ti-close"></i> Cancel</a>
+                        <a href="{{ redirect()->back()->getTargetUrl() }}" class="btn btn-default btn-fill btn-wd"><i class="ti-close"></i> Cancel</a>
                     </div>
                 </div>
             {!! Form::close() !!}

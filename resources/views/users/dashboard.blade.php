@@ -68,43 +68,45 @@
 	</div>
 </div>
 
-<div class="row">
-	<div class="col-md-12">
-	    <div class="card">
-	        <div class="header">
-	            <h4 class="title">Top 3 Links</h4>
-	            <p class="category">Top links ever</p>
-	        </div>
-	        <div class="content table-responsive table-full-width">
-	            <table class="table table-striped table-dashboard">
-	                <thead>
-	                    <th>#</th>
-	                    <th>Original URL</th>
-	                    <th>Short URL</th>
-	                    <th>Description</th>
-	                    <th>Clicks</th>
-	                </thead>
-	                <tbody>
-	                	<?php $i = 1; ?>
-	                	@foreach (getThreeTopLinks($links) as $link)
-	                		<tr>
-	                			<td>{{ $i++ }}</td>
-	                			<td>{{ str_limit(Shortener::decodeUrl($link->url), 30) }}</td>
-	                            <td>{{ getShortLink($link->short_url) }}</td>
-	                            <td>{{ str_limit($link->description, 40) }}</td>
-	                            <td class="text-center">{{ $link->clicks->count() }}</td>
-	                		</tr>
-	                	@endforeach
-	                </tbody>
-	            </table>
+@if (count($topLinks = getThreeTopLinks($links)) !== 0)
+	<div class="row">
+		<div class="col-md-12">
+		    <div class="card">
+		        <div class="header">
+		            <h4 class="title">Top 3 Links</h4>
+		            <p class="category">Top links ever</p>
+		        </div>
+		        <div class="content table-responsive table-full-width">
+		            <table class="table table-striped table-dashboard">
+		                <thead>
+		                    <th>#</th>
+		                    <th>Original URL</th>
+		                    <th>Short URL</th>
+		                    <th>Description</th>
+		                    <th>Clicks</th>
+		                </thead>
+		                <tbody>
+		                	<?php $i = 1; ?>
+		                	@foreach ($topLinks as $link)
+		                		<tr>
+		                			<td>{{ $i++ }}</td>
+		                			<td><a href="{{ Shortener::decodeUrl($link->url) }}">{{ str_limit(Shortener::decodeUrl($link->url), 30) }}</a></td>
+		                            <td><a href="{{ URL::to('/s/' . $link->short_url) }}">{{ getShortLink($link->short_url) }}</a></td>
+		                            <td>{{ str_limit($link->description, 40) }}</td>
+		                            <td class="text-center">{{ $link->clicks->count() }}</td>
+		                		</tr>
+		                	@endforeach
+		                </tbody>
+		            </table>
 
-	            <div class="table-btn">
-	                <a href="{{ URL::to('/links/') }}" class="btn btn-info btn-fill btn-wd"><i class="ti-list"></i> View more</a>
-	            </div>
-	        </div>
-	    </div>
+		            <div class="table-btn">
+		                <a href="{{ URL::to('/links/') }}" class="btn btn-info btn-fill btn-wd"><i class="ti-list"></i> View more</a>
+		            </div>
+		        </div>
+		    </div>
+		</div>
 	</div>
-</div>
+@endif
 
 <div class="row">
 	<div class="col-md-12">

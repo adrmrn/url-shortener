@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\EditUserRequest;
 
 use App\Http\Requests;
 use Auth;
@@ -44,6 +45,28 @@ class UsersController extends Controller
     public function profile()
     {
         return view('users.profile');
+    }
+
+    public function update(EditUserRequest $request)
+    {
+        // Get User obj
+        $user = Auth::user();
+
+        // Check if User changed password
+        if (!empty($request->password)) {
+            $user->update($request->only([
+                'first_name', 'last_name', 'email', 'password', 'website'
+            ]));
+        } else {
+            $user->update($request->only([
+                'first_name', 'last_name', 'email', 'website'
+            ]));
+        }
+
+        // Flashing success message
+        flash(1, 'Data has been updated!');
+
+        return redirect('/profile');
     }
 
     public function listing()

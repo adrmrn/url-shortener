@@ -21,14 +21,16 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <label class="control-label">Are you sure that you want remove <a href="{{ URL::to('/s/' . $link->short_url) }}">{{ Request::getHttpHost() }}/s/{{ $link->short_url }}</a> short link?</label>
+                        <label class="control-label">Are you sure that you want remove <a href="{{ URL::to('/s/' . $link->short_url) }}">
+                            {{ getShortLink($link->short_url) }}</a> short link?
+                        </label>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-danger btn-fill btn-wd"><i class="ti-trash"></i> Remove</button>
-                        <a href="{{ URL::to('/links/preview/' . $link->short_url) }}" class="btn btn-default btn-fill btn-wd"><i class="ti-close"></i> Cancel</a>
+                        <a href="{{ redirect()->back()->getTargetUrl() }}" class="btn btn-default btn-fill btn-wd"><i class="ti-close"></i> Cancel</a>
                     </div>
                 </div>
             {!! Form::close() !!}

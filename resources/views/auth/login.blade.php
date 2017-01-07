@@ -55,7 +55,7 @@
             </div>
         </div>
 
-        <p class="text-center"><a href="{{ url('/password/reset') }}">Forgot Your Password?</a></p>
+        <!--<p class="text-center"><a href="{{ url('/password/reset') }}">Forgot Your Password?</a></p>-->
     </form>
 </div>
 

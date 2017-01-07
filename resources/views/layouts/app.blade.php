@@ -35,12 +35,8 @@
     	<div class="sidebar-wrapper">
 
             <div class="user-panel">
-                <div class="avatar">
-                    <img src="{{ URL::asset('assets/img/faces/face-2.jpg') }}">
-                </div>
-
                 <h4 class="title">
-                    {{ Auth::user()->name }}<br />
+                    {{ Auth::user()->first_name }} {{ substr(Auth::user()->last_name, 0, 1) }}<br />
                     <small>{{ Auth::user()->roles[0]->display_name }}</small>
                 </h4>
             </div>
